@@ -1,5 +1,5 @@
 {
-  "name": "@aha-develop/react",
+  "name": "@aha-app/aha-develop-react",
   "version": "1.0.0",
   "description": "Common react patterns for Aha! develop",
   "main": "dist/index.js",
