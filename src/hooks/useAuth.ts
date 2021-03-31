@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { getServiceAuthContext } from "../ServiceAuth";
+import { getServiceAuthContext } from "../AuthProvider";
 
 interface UseAuthOptions<R> {
   /** Optional service name. Only required if multiple services are used */
