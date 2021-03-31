@@ -1,0 +1,23 @@
+{
+  "name": "@aha-develop/react",
+  "version": "1.0.0",
+  "description": "Common react patterns for Aha! develop",
+  "main": "dist/index.js",
+  "repository": "https://github.com/aha-develop/react",
+  "license": "NONE",
+  "files": [
+    "dist",
+    "README"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "typescript": "^4.2.3"
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0"
+  }
+}
