@@ -6,7 +6,7 @@ import React, {
   useReducer,
 } from "react";
 
-interface AuthState {
+export interface AuthState {
   error: string | null;
   authed: boolean | null;
   authData: unknown;
@@ -28,6 +28,10 @@ function unauthed(): AuthState {
 const serviceAuthContexts: Map<string, React.Context<AuthContext>> = new Map();
 let firstAuthContext: string | undefined;
 
+/**
+ * Create a new ServiceAuthContext. If one already exists for the given name
+ * then it is returned.
+ */
 function createServiceAuthContext(serviceName: string) {
   const existingContext = serviceAuthContexts.get(serviceName);
   if (existingContext) return existingContext;
@@ -41,6 +45,11 @@ function createServiceAuthContext(serviceName: string) {
   return context;
 }
 
+/**
+ * Get an existing ServiceAuthContext. If none exist by the requested name then
+ * it raises. If no serviceName is passed then the first registered context is
+ * returned, or it raises.
+ */
 export function getServiceAuthContext(
   serviceName?: string
 ): React.Context<AuthContext> {
@@ -54,6 +63,9 @@ export function getServiceAuthContext(
   return context;
 }
 
+/**
+ * Reducer for the auth context value
+ */
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case "authed":

@@ -8,7 +8,7 @@ Run a callback with authentication to an external service and return the data an
 import { useAuth } from "@aha-develop/react";
 
 function LoadPullRequests(props) {
-  const { loading, authed, data, fetch } = useAuth(async (authData) => {
+  const { loading, authed, data, fetchData } = useAuth(async (authData) => {
     const api = octokit.defaults({
       headers: { authorization: `token ${authData.token}` },
     });
@@ -21,7 +21,7 @@ function LoadPullRequests(props) {
   }
 
   if (!authed) {
-    return <button onClick={fetch}>Load pull requests</button>;
+    return <button onClick={fetchData}>Load pull requests</button>;
   }
 
   const pullRequests = data.map((pr, idx) => <PullRequest key={idx} pr={pr} />);
@@ -62,8 +62,11 @@ It's possible to use multiple services in one extension with useAuth:
 ```
 
 ```js
-const { data, loading, authed, fetch } = useAuth(fetchPrs, {
+const { data, loading, authed, fetchData } = useAuth(fetchGitlabPrs, {
   serviceName: "gitlab",
+});
+const { data, loading, authed, fetchData } = useAuth(fetchGithubPrs, {
+  serviceName: "github",
 });
 ```
 

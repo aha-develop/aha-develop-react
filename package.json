@@ -1,6 +1,6 @@
 {
   "name": "@aha-app/aha-develop-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common react patterns for Aha! develop",
   "main": "dist/index.js",
   "repository": "https://github.com/aha-develop/react",
@@ -11,7 +11,8 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc"
+    "build": "rm -rf dist && tsc",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@types/react": "^17.0.3",

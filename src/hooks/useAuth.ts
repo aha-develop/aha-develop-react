@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { getServiceAuthContext } from "../AuthProvider";
+import { AuthState, getServiceAuthContext } from "../AuthProvider";
 
 interface UseAuthOptions<R> {
   /** Optional service name. Only required if multiple services are used */
@@ -12,11 +12,34 @@ interface UseAuthCallback<R> {
   (authData: unknown): Promise<R>;
 }
 
+interface UseAuthState<R> extends Omit<AuthState, "authData"> {
+  /** The data returned by the callback. Will be null until loaded */
+  data: R | null;
+  /** True once authed is true while the data is loading */
+  loading: boolean;
+  /** Force authentication and fetching the data */
+  fetchData(): Promise<boolean>;
+}
+
+/**
+ * When this hook is called, if the user has already authenticated with the
+ * remote service then the callback is run immediately to populate the data.
+ *
+ * If the user has not yet authenticated then the callback will not be run. The
+ * authed flag will be false. The component can force the user to authenticate
+ * by calling fetchData()
+ *
+ * @param callback Async function that is given the authData once the user has
+ *   authenticated and returns the data for the component
+ * @param options
+ * @param deps Dependencies for the callback function. The data will be
+ *   refetched each time these change IF the user is authenticated
+ */
 export function useAuth<R>(
   callback: UseAuthCallback<R>,
   options: UseAuthOptions<R> = {},
   deps = []
-) {
+): UseAuthState<R> {
   const context = useMemo(() => getServiceAuthContext(options.serviceName), [
     options.serviceName,
   ]);
@@ -38,12 +61,20 @@ export function useAuth<R>(
     }
   }, [authData]);
 
-  const fetch = async () => {
+  // Force authentication and/or refetch the data
+  const fetchData = async () => {
     setLoading(true);
     setData(null);
-    handleReauth();
+
+    if (authed) {
+      getData();
+      return true;
+    } else {
+      return handleReauth();
+    }
   };
 
+  // Fetch the data once authed
   useEffect(() => {
     if (authError) {
       setError(authError);
@@ -58,6 +89,7 @@ export function useAuth<R>(
     getData();
   }, [authed, authError]);
 
+  // Refetch data if user deps change
   useEffect(() => {
     if (!deps || deps.length === 0) return;
     // Although authed is checked, its not a dep because this should not be run
@@ -65,5 +97,5 @@ export function useAuth<R>(
     if (authed) getData();
   }, deps);
 
-  return { data, error, authed, loading, fetch };
+  return { data, error, authed, loading, fetchData };
 }
