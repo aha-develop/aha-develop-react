@@ -5,6 +5,8 @@
 Run a callback with authentication to an external service and return the data and/or the auth and loading state.
 
 ```js
+import { useAuth } from "@aha-develop/react";
+
 function LoadPullRequests(props) {
   const { loading, authed, data, fetch } = useAuth(async (authData) => {
     const api = octokit.defaults({
