@@ -71,3 +71,29 @@ const { data, loading, authed, fetchData } = useAuth(fetchGithubPrs, {
 ```
 
 If no serviceName is provided then the first registered AuthProvider is used.
+
+### useOutsideAlerter
+
+If there is a modal or popup component controlled by the extension then
+capturing mouse clicks outside the area of the popup can be tricky due to the
+shadowRoot container. This hook will set up a container aware event handler:
+
+```js
+function Popup({ onClose }) {
+  const popupEl = useRef(null);
+  useOutsideAlerter(popupEl, () => onClose());
+
+  return (
+    <div ref={popupEl}>
+      I'm a popup
+      <button onClick={onClose}>Close</button>
+    </div>
+  );
+}
+```
+
+The event defaults to "mousedown" and can be customised:
+
+```js
+useOutsideAlerter(popupEl, onClose, { event: "mousemove" });
+```
