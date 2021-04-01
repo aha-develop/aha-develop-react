@@ -1,6 +1,6 @@
 {
   "name": "@aha-app/aha-develop-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Common react patterns for Aha! develop",
   "main": "dist/index.js",
   "repository": "https://github.com/aha-develop/react",

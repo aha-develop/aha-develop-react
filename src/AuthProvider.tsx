@@ -107,18 +107,18 @@ export function AuthProvider({
 
   const [authState, dispatch] = useReducer(authReducer, unauthed());
 
-  const loadCachedAuth = useCallback(
-    () => async () => {
-      try {
-        const options = { useCachedRetry: true, parameters: serviceParameters };
-        const authData = await aha.auth(serviceName, options);
-        dispatch({ type: "authed", authData });
-      } catch (err) {
-        dispatch({ type: "error", message: err.message });
-      }
-    },
-    [serviceName, serviceParameters, dispatch]
-  );
+  const loadCachedAuth = useCallback(async () => {
+    try {
+      const authData = await aha.auth(serviceName, {
+        useCachedRetry: true,
+        reAuth: false,
+        parameters: serviceParameters,
+      });
+      dispatch({ type: "authed", authData });
+    } catch (err) {
+      dispatch({ type: "error", message: err.message });
+    }
+  }, [serviceName, serviceParameters, dispatch]);
 
   const handleReauth = useCallback(async () => {
     dispatch({ type: "clear" });
