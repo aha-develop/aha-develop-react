@@ -12,7 +12,7 @@ interface Options {
 
 export function useOutsideAlerter(
   ref: React.RefObject<HTMLElement>,
-  callback: () => void,
+  callback: (event: MouseEvent) => void,
   options: Options = {}
 ) {
   const [root, setRoot] = useState<ShadowRoot | null>(null);
@@ -39,7 +39,7 @@ export function useOutsideAlerter(
         !ref.current.contains(event.target as Element)
       ) {
         if (root && (event.target as Element).shadowRoot === root) return;
-        callback();
+        callback(event);
       }
     }
 
