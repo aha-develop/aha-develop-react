@@ -17,7 +17,7 @@ function LoadPullRequests(props) {
   });
 
   if (loading) {
-    return <Spinner />;
+    return <aha-spinner />;
   }
 
   if (!authed) {
@@ -39,12 +39,11 @@ The component must be wrapped in an AuthProvider. This would usually be done at 
 ```js
 import { AuthProvider } from "@aha-develop/react";
 
-aha.on("pullRequests", (container) => {
-  ReactDOM.render(
+aha.on("pullRequests", () => {
+  return (
     <AuthProvider serviceName="github" serviceParameters={{ scope: "repo" }}>
       <App />
-    </AuthProvider>,
-    container
+    </AuthProvider>
   );
 });
 ```
