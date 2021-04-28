@@ -6,7 +6,8 @@ type MouseEventKeyMap<T> = {
 type MouseEventKey = keyof MouseEventKeyMap<DocumentEventMap>;
 
 interface Options {
-  /** The mouse event to listen for. Defaults to "mousedown" */
+  /** The mouse event to listen for. Defaults to "mousedown" so clicking triggers
+   * the alert. But a tooltip popup might prefer "mouseover" */
   event?: MouseEventKey;
 }
 
