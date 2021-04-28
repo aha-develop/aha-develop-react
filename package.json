@@ -4,6 +4,7 @@
   "description": "Common react patterns for Aha! develop",
   "main": "dist/index.js",
   "repository": "https://github.com/aha-develop/react",
+  "author": "Aha! Develop",
   "license": "MIT",
   "files": [
     "dist",
