@@ -19,7 +19,7 @@ yarn install @aha-app/aha-develop-react
 Run a callback with authentication to an external service and return the data and/or the auth and loading state.
 
 ```js
-import { useAuth } from "@aha-develop/react";
+import { useAuth } from "@aha-app/aha-develop-react";
 
 function LoadPullRequests(props) {
   const { loading, authed, data, fetchData } = useAuth(async (authData) => {
@@ -51,7 +51,7 @@ If `loading` is true then the user is authenticated and the data is being reques
 The component must be wrapped in an AuthProvider. This would usually be done at the root node:
 
 ```js
-import { AuthProvider } from "@aha-develop/react";
+import { AuthProvider } from "@aha-app/aha-develop-react";
 
 aha.on("pullRequests", () => {
   return (
