@@ -1,3 +1,17 @@
+# React helper utilities for Aha! develop extensions
+
+Install:
+
+```
+npm install @aha-app/aha-develop-react
+```
+
+or
+
+```
+yarn install @aha-app/aha-develop-react
+```
+
 ## Hooks
 
 ### useAuth
