@@ -38,11 +38,12 @@ interface UseAuthState<R> extends Omit<AuthState, "authData"> {
 export function useAuth<R>(
   callback: UseAuthCallback<R>,
   options: UseAuthOptions<R> = {},
-  deps = []
+  deps: React.DependencyList = []
 ): UseAuthState<R> {
-  const context = useMemo(() => getServiceAuthContext(options.serviceName), [
-    options.serviceName,
-  ]);
+  const context = useMemo(
+    () => getServiceAuthContext(options.serviceName),
+    [options.serviceName]
+  );
   const authState = useContext(context);
   const { authed, authData, error: authError, handleReauth } = authState;
   const [error, setError] = useState(authError);
@@ -59,7 +60,7 @@ export function useAuth<R>(
     } finally {
       setLoading(false);
     }
-  }, [authData]);
+  }, [authData, ...deps]);
 
   // Force authentication and/or refetch the data
   const fetchData = async () => {
