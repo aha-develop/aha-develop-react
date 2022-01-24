@@ -42,7 +42,7 @@ const EmbeddedDesignInput = ({ product, placeholder, onInput }: EmbeddedDesignIn
   )
 }
 
-const EmbeddedDesign = ({ src }: { src: string }) => (
+export const EmbeddedDesign = ({ src }: { src: string }) => (
   <AspectRatio width={16} height={9}>
     <iframe
       src={src}

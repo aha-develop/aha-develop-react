@@ -1,3 +1,6 @@
 export * from "./hooks";
 export { AuthProvider } from "./AuthProvider";
-export { EmbeddedDesignAttribute } from "./components/EmbeddedDesignAttribute";
+export {
+  EmbeddedDesign,
+  EmbeddedDesignAttribute
+} from "./components/EmbeddedDesignAttribute";
