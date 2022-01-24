@@ -34,10 +34,8 @@ const AspectRatio = ({ width, height, children }: AspectRatioProps) => (
 
 const EmbeddedDesignInput = ({ product, placeholder, onInput }: EmbeddedDesignInputProps) => {
   return (
-    // @ts-expect-error: component definitions aren't available in this package. How do we install them?
     <aha-field label={`${product} link`}>
       <input onInput={onInput} placeholder={placeholder} />
-    { /* @ts-expect-error: component definitions aren't available in this package. How do we install them? */ }
     </aha-field>
   )
 }
@@ -61,7 +59,8 @@ export const EmbeddedDesignAttribute = ({ identifier, record, fields, product, p
   const src = fields[fieldName] as string
 
   const openLink = () => {
-    window.open(src, "_blank", "noopener,noreferrer")
+    const sanitized = aha.sanitizeUrl(src)
+    window.open(sanitized, "_blank", "noopener,noreferrer")
   }
 
   const setLink = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,13 +75,12 @@ export const EmbeddedDesignAttribute = ({ identifier, record, fields, product, p
   }
 
   const removeLink = () => {
-    // @ts-expect-error: `clearExtensionField` definition is missing from ApplicationModel interface
     record.clearExtensionField(identifier, fieldName)
   }
 
   if (!src) {
     return (
-      <EmbeddedDesignInput 
+      <EmbeddedDesignInput
         product={product}
         placeholder={placeholder}
         onInput={setLink}
@@ -90,22 +88,20 @@ export const EmbeddedDesignAttribute = ({ identifier, record, fields, product, p
     )
   }
 
-  if (src) {
-    return (
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gridGap: 10 }}>
-        <EmbeddedDesign src={src} />
-        <aha-menu>
-          <aha-button slot="button" type="attribute" size="small">
-            <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
-          </aha-button>
-          <aha-menu-item onClick={openLink}>
-            View in {product}
-          </aha-menu-item>
-          <aha-menu-item onClick={removeLink}>
-            Remove
-          </aha-menu-item>
-        </aha-menu>
-      </div>
-    )
-  }
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gridGap: 10 }}>
+      <EmbeddedDesign src={src} />
+      <aha-menu>
+        <aha-button slot="button" type="attribute" size="small">
+          <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
+        </aha-button>
+        <aha-menu-item onClick={openLink}>
+          View in {product}
+        </aha-menu-item>
+        <aha-menu-item onClick={removeLink}>
+          Remove
+        </aha-menu-item>
+      </aha-menu>
+    </div>
+  )
 }
