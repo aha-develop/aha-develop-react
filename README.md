@@ -131,7 +131,7 @@ Embeds content via an iframe. Constrains element size based on aspect ratio. San
 Fully-featured component for managing embedded content associated with an Aha! Record. Collects a URL as user input, stores it as extension data on the record, and displays the URL at a fixed aspect ratio when set.
 
 
- ```js
+```js
 import React from "react";
 import { EmbeddedContentAttribute } from "@aha-app/aha-develop-react";
 
