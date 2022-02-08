@@ -2,14 +2,14 @@ import React from "react";
 import { DrawerInput } from "../components/DrawerInput";
 import { EmbeddedContent } from "../components/EmbeddedContent";
 
-export type LinkUpdatedCallback = (url: string) => Promise<string>
+export type LinkUpdatedCallback = (url: string) => string | Promise<string>
 export interface EmbeddedContentAttributeProps {
   identifier: string;
   record: Aha.RecordUnion;
   fields: { [index: string]: unknown };
   product: string;
   placeholder: string | undefined;
-  /** Optional async function that allows component to modify supplied user input before saving */
+  /** Optional function that allows component to modify supplied user input before saving */
   onLinkUpdated?: LinkUpdatedCallback
 }
 
@@ -19,7 +19,7 @@ export interface EmbeddedContentAttributeProps {
  * record, and displays the URL at a fixed aspect ratio when set.
  * 
  */
-export const EmbeddedContentAttribute = ({ identifier, record, fields, product, placeholder, onLinkUpdated = Promise.resolve }: EmbeddedContentAttributeProps) => {
+export const EmbeddedContentAttribute = ({ identifier, record, fields, product, placeholder, onLinkUpdated = (v) => v }: EmbeddedContentAttributeProps) => {
   const fieldName = `${product.replace(/\s+/g, '')}:link`
   const src = fields[fieldName] as string
 
@@ -33,7 +33,8 @@ export const EmbeddedContentAttribute = ({ identifier, record, fields, product, 
 
     if (!value) return
 
-    onLinkUpdated(value)
+    Promise.resolve(value)
+      .then(onLinkUpdated)
       .then(value => {
         record.setExtensionField(identifier, fieldName, value)
       })
