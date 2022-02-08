@@ -110,3 +110,49 @@ The event defaults to "mousedown" and can be customised:
 ```js
 useOutsideAlerter(popupEl, onClose, { event: "mousemove" });
 ```
+
+## Components
+
+### EmbeddedContent
+
+Embeds content via an iframe. Constrains element size based on aspect ratio. Sanitizes user input.
+
+```js
+<EmbeddedContent
+  src="https://my.site.xzy/design.png"
+  aspectRatio={1.333}
+/>
+```
+
+## Patterns
+
+### EmbeddedContentAttribute
+
+Fully-featured component for managing embedded content associated with an Aha! Record. Collects a URL as user input, stores it as extension data on the record, and displays the URL at a fixed aspect ratio when set.
+
+
+```js
+import React from "react";
+import { EmbeddedContentAttribute } from "@aha-app/aha-develop-react";
+
+aha.on("myServiceAttribute", ({ record, fields }, { identifier }) => {
+  const ensureEmbedFlags = async (url) => {
+    if (url.includes('emb=1')) {
+      return url;
+    } else {
+      return `${url}?emb=1&ios=false&frameless=false`;
+    }
+  };
+
+  return (
+    <EmbeddedContentAttribute
+      identifier={identifier}
+      record={record}
+      fields={fields}
+      product="MyService"
+      placeholder="https://my.site.xyz/embed/..."
+      onLinkUpdated={ensureEmbedFlags}
+    />
+  );
+});
+ ```
