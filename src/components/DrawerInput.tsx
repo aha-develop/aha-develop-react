@@ -1,6 +1,7 @@
 import React from "react";
 
-export interface DrawerInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface DrawerInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   onInput: React.FormEventHandler<HTMLInputElement>;
 }
@@ -10,14 +11,14 @@ export interface DrawerInputProps extends React.InputHTMLAttributes<HTMLInputEle
  */
 export const DrawerInput = ({ label, onInput, ...props }: DrawerInputProps) => {
   return (
-      <input
-        aria-label={label}
-        onInput={onInput}
-        style={{
-          'width': 'calc(100% - 6px)',
-          'borderColor': 'transparent'
-        }}
-        {...props}
-      />
-  )
-}
+    <input
+      aria-label={label}
+      onInput={onInput}
+      style={{
+        width: "calc(100% - 6px)",
+        borderColor: "transparent",
+      }}
+      {...props}
+    />
+  );
+};
