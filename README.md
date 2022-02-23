@@ -9,7 +9,7 @@ npm install @aha-develop/aha-develop-react
 or
 
 ```
-yarn install @aha-develop/aha-develop-react
+yarn add @aha-develop/aha-develop-react
 ```
 
 ## Hooks
