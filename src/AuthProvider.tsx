@@ -101,9 +101,10 @@ export function AuthProvider({
   serviceParameters,
   children,
 }: AuthProviderProps) {
-  const context = useMemo(() => createServiceAuthContext(serviceName), [
-    serviceName,
-  ]);
+  const context = useMemo(
+    () => createServiceAuthContext(serviceName),
+    [serviceName]
+  );
 
   const [authState, dispatch] = useReducer(authReducer, unauthed());
 
@@ -116,7 +117,7 @@ export function AuthProvider({
       });
       dispatch({ type: "authed", authData });
     } catch (err) {
-      dispatch({ type: "error", message: err.message });
+      dispatch({ type: "error", message: (err as Error).message });
     }
   }, [serviceName, serviceParameters, dispatch]);
 
@@ -132,7 +133,7 @@ export function AuthProvider({
       dispatch({ type: "authed", authData });
       return true;
     } catch (err) {
-      dispatch({ type: "error", message: err.message });
+      dispatch({ type: "error", message: (err as Error).message });
       return false;
     }
   }, [serviceName, serviceParameters, dispatch]);
