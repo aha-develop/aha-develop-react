@@ -12,7 +12,7 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc || test -f ./dist/index.js",
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
