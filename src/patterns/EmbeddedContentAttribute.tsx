@@ -65,7 +65,7 @@ export const EmbeddedContentAttribute = ({
 
   return (
     <div
-      style={{ display: 'grid', gridTemplateColumns: '1fr auto', gridGap: 10 }}
+      style={{ display: 'grid', alignItems: 'start', gridTemplateColumns: '1fr auto', gridGap: 10 }}
     >
       <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
