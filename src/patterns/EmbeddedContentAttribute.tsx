@@ -11,6 +11,7 @@ export interface EmbeddedContentAttributeProps {
   placeholder: string | undefined;
   /** Optional function that allows component to modify supplied user input before saving */
   onLinkUpdated?: LinkUpdatedCallback;
+  aspectRatio?: number;
 }
 
 /**
@@ -26,14 +27,15 @@ export const EmbeddedContentAttribute = ({
   product,
   placeholder,
   onLinkUpdated = (v) => v,
+  aspectRatio = 4 / 3,
 }: EmbeddedContentAttributeProps) => {
-  const fieldName = `${product.replace(/\s+/g, "")}:link`;
+  const fieldName = `${product.replace(/\s+/g, '')}:link`
   const src = fields[fieldName] as string;
 
   const openLink = () => {
     const sanitized = aha.sanitizeUrl(src);
-    window.open(sanitized, "_blank", "noopener,noreferrer");
-  };
+    window.open(sanitized, '_blank', 'noopener,noreferrer');
+  }
 
   const setLink = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -63,16 +65,19 @@ export const EmbeddedContentAttribute = ({
 
   return (
     <div
-      style={{ display: "grid", gridTemplateColumns: "1fr auto", gridGap: 10 }}
+      style={{ display: 'grid', alignItems: 'start', gridTemplateColumns: '1fr auto', gridGap: 10 }}
     >
-      <EmbeddedContent src={src} />
+      <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
         <aha-button slot="button" type="attribute" size="small">
           <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
         </aha-button>
         <aha-menu-item onClick={openLink}>View in {product}</aha-menu-item>
-        <aha-menu-item onClick={removeLink}>Remove</aha-menu-item>
+        <hr />
+        <aha-menu-item onClick={removeLink}>
+          <span className="text-error">Remove</span>
+        </aha-menu-item>
       </aha-menu>
     </div>
-  );
+  )
 };
