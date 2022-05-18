@@ -69,14 +69,23 @@ export const EmbeddedContentAttribute = ({
     >
       <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
-        <aha-button slot="button" type="attribute" size="small">
+        <aha-button slot="control" kind="attribute" size="small">
           <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
         </aha-button>
-        <aha-menu-item onClick={openLink}>View in {product}</aha-menu-item>
-        <hr />
-        <aha-menu-item onClick={removeLink}>
-          <span className="text-error">Remove</span>
-        </aha-menu-item>
+        <aha-menu-content>
+          <aha-menu-group>
+            <aha-menu-item>
+              <a href="#" onClick={openLink}>View in {product}</a>
+            </aha-menu-item>
+          </aha-menu-group>
+          <aha-menu-group>
+            <aha-menu-item>
+              <a href="#" onClick={removeLink}>
+                <span className="text-error">Remove</span>
+              </a>
+            </aha-menu-item>
+          </aha-menu-group>
+        </aha-menu-content>
       </aha-menu>
     </div>
   )
