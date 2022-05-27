@@ -75,14 +75,14 @@ export const EmbeddedContentAttribute = ({
         <aha-menu-content>
           <aha-menu-group>
             <aha-menu-item>
-              <a href="#" onClick={openLink}>View in {product}</a>
+              <aha-button kind="plain" onClick={openLink}>View in {product}</aha-button>
             </aha-menu-item>
           </aha-menu-group>
           <aha-menu-group>
             <aha-menu-item>
-              <a href="#" onClick={removeLink}>
+              <aha-button kind="plain" onClick={removeLink}>
                 <span className="text-error">Remove</span>
-              </a>
+              </aha-button>
             </aha-menu-item>
           </aha-menu-group>
         </aha-menu-content>
