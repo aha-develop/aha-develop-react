@@ -111,6 +111,25 @@ The event defaults to "mousedown" and can be customised:
 useOutsideAlerter(popupEl, onClose, { event: "mousemove" });
 ```
 
+
+### useClipboard
+
+This is a simple clipboard helper for React components to copy text to the clipboard and show an indicator for a short time:
+
+```js
+function CopyableId({ id }) {
+  const [onCopy, copied] = useClipboard();
+
+  return <div>
+    <span>{id}</span>
+    <button onClick={() => onCopy(id)}>
+      <i className="fa-regular fa-copy"></i>
+      {copied ? "Copied" : "Copy"}
+    </button>
+  </div>
+}
+```
+
 ## Components
 
 ### EmbeddedContent
