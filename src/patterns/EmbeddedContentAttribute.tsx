@@ -12,6 +12,7 @@ export interface EmbeddedContentAttributeProps {
   /** Optional function that allows component to modify supplied user input before saving */
   onLinkUpdated?: LinkUpdatedCallback;
   aspectRatio?: number;
+  fieldName?: string;
 }
 
 /**
@@ -28,18 +29,16 @@ export const EmbeddedContentAttribute = ({
   placeholder,
   onLinkUpdated = (v) => v,
   aspectRatio = 4 / 3,
+  fieldName = `${product.replace(/\s+/g, "")}:link`,
 }: EmbeddedContentAttributeProps) => {
-  const fieldName = `${product.replace(/\s+/g, '')}:link`
   const src = fields[fieldName] as string;
 
   const openLink = () => {
     const sanitized = aha.sanitizeUrl(src);
-    window.open(sanitized, '_blank', 'noopener,noreferrer');
-  }
+    window.open(sanitized, "_blank", "noopener,noreferrer");
+  };
 
-  const setLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-
+  const setLink = (value: string) => {
     if (!value) return;
 
     Promise.resolve(value)
@@ -58,26 +57,43 @@ export const EmbeddedContentAttribute = ({
       <DrawerInput
         label={`${product} link`}
         placeholder={placeholder}
-        onInput={setLink}
+        onChange={setLink}
       />
     );
   }
 
   return (
     <div
-      style={{ display: 'grid', alignItems: 'start', gridTemplateColumns: '1fr auto', gridGap: 10 }}
+      style={{
+        display: "grid",
+        alignItems: "start",
+        gridTemplateColumns: "1fr auto",
+        gridGap: 10,
+      }}
     >
       <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
-        <aha-button slot="button" type="attribute" size="small">
+        <aha-button slot="control" kind="secondary" size="mini">
           <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
         </aha-button>
-        <aha-menu-item onClick={openLink}>View in {product}</aha-menu-item>
-        <hr />
-        <aha-menu-item onClick={removeLink}>
-          <span className="text-error">Remove</span>
-        </aha-menu-item>
+        <aha-menu-content>
+          <aha-menu-group>
+            <aha-menu-item>
+              <aha-button kind="plain" onClick={openLink}>
+                View in {product}
+              </aha-button>
+            </aha-menu-item>
+          </aha-menu-group>
+          <aha-menu-group>
+            <aha-menu-item type="danger">
+              <aha-button kind="plain" onClick={removeLink}>
+                <aha-icon icon="fa fa-trash" />
+                Remove
+              </aha-button>
+            </aha-menu-item>
+          </aha-menu-group>
+        </aha-menu-content>
       </aha-menu>
     </div>
-  )
+  );
 };
