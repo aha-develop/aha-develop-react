@@ -12,6 +12,7 @@ export interface EmbeddedContentAttributeProps {
   /** Optional function that allows component to modify supplied user input before saving */
   onLinkUpdated?: LinkUpdatedCallback;
   aspectRatio?: number;
+  fieldName?: string;
 }
 
 /**
@@ -28,8 +29,8 @@ export const EmbeddedContentAttribute = ({
   placeholder,
   onLinkUpdated = (v) => v,
   aspectRatio = 4 / 3,
+  fieldName = `${product.replace(/\s+/g, "")}:link`,
 }: EmbeddedContentAttributeProps) => {
-  const fieldName = `${product.replace(/\s+/g, '')}:link`
   const src = fields[fieldName] as string;
 
   const openLink = () => {
