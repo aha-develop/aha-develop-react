@@ -34,8 +34,8 @@ export const EmbeddedContentAttribute = ({
 
   const openLink = () => {
     const sanitized = aha.sanitizeUrl(src);
-    window.open(sanitized, '_blank', 'noopener,noreferrer');
-  }
+    window.open(sanitized, "_blank", "noopener,noreferrer");
+  };
 
   const setLink = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -65,17 +65,29 @@ export const EmbeddedContentAttribute = ({
 
   return (
     <div
-      style={{ display: 'grid', alignItems: 'start', gridTemplateColumns: '1fr auto', gridGap: 10 }}
+      style={{
+        display: "grid",
+        alignItems: "start",
+        gridTemplateColumns: "1fr auto",
+        gridGap: 10,
+      }}
     >
       <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
-        <aha-button slot="control" kind="secondary" size="mini" class="attribute__control">
+        <aha-button
+          slot="control"
+          kind="secondary"
+          size="mini"
+          class="attribute__control"
+        >
           <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
         </aha-button>
         <aha-menu-content>
           <aha-menu-group>
             <aha-menu-item>
-              <aha-button kind="plain" onClick={openLink}>View in {product}</aha-button>
+              <aha-button kind="plain" onClick={openLink}>
+                View in {product}
+              </aha-button>
             </aha-menu-item>
           </aha-menu-group>
           <aha-menu-group>
@@ -88,5 +100,5 @@ export const EmbeddedContentAttribute = ({
         </aha-menu-content>
       </aha-menu>
     </div>
-  )
+  );
 };
