@@ -9,7 +9,11 @@ export interface DrawerInputProps
 /**
  * Simple component for recreating the UI/UX of an Aha! record drawer input.
  */
-export const DrawerInput = ({ label, onInput, ...props }: DrawerInputProps) => {
+export const DrawerInput = ({
+  label,
+  onChange,
+  ...props
+}: DrawerInputProps) => {
   return (
     <>
       <style>
@@ -23,7 +27,14 @@ export const DrawerInput = ({ label, onInput, ...props }: DrawerInputProps) => {
       <input
         className="DrawerInput--input"
         aria-label={label}
-        onInput={onInput}
+        onBlur={(event: React.BlurEvent<HTMLInputElement>) =>
+          onChange(event.target.value)
+        }
+        onKeyDown={(event: React.KeyDownEvent<HTMLInputElement>) => {
+          if (event.key === "Enter") {
+            event.target.blur();
+          }
+        }}
         style={{
           width: "calc(100% - 6px)",
           borderColor: "transparent",

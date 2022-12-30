@@ -38,9 +38,7 @@ export const EmbeddedContentAttribute = ({
     window.open(sanitized, "_blank", "noopener,noreferrer");
   };
 
-  const setLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-
+  const setLink = (value: string) => {
     if (!value) return;
 
     Promise.resolve(value)
@@ -59,7 +57,7 @@ export const EmbeddedContentAttribute = ({
       <DrawerInput
         label={`${product} link`}
         placeholder={placeholder}
-        onInput={setLink}
+        onChange={setLink}
       />
     );
   }
