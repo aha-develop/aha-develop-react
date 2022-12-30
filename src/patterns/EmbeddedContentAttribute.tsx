@@ -75,12 +75,7 @@ export const EmbeddedContentAttribute = ({
     >
       <EmbeddedContent src={src} aspectRatio={aspectRatio} />
       <aha-menu>
-        <aha-button
-          slot="control"
-          kind="secondary"
-          size="mini"
-          class="attribute__control"
-        >
+        <aha-button slot="control" kind="secondary" size="mini">
           <aha-icon icon="fa-solid fa-ellipsis"></aha-icon>
         </aha-button>
         <aha-menu-content>
