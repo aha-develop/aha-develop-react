@@ -11,14 +11,27 @@ export interface DrawerInputProps
  */
 export const DrawerInput = ({ label, onInput, ...props }: DrawerInputProps) => {
   return (
-    <input
-      aria-label={label}
-      onInput={onInput}
-      style={{
-        width: "calc(100% - 6px)",
-        borderColor: "transparent",
-      }}
-      {...props}
-    />
+    <>
+      <style>
+        {`
+          .DrawerInput--input::placeholder {
+            color: var(--theme-accent-icon);
+            padding-left: 3px;
+          }
+        `}
+      </style>
+      <input
+        className="DrawerInput--input"
+        aria-label={label}
+        onInput={onInput}
+        style={{
+          width: "calc(100% - 6px)",
+          borderColor: "transparent",
+          color: "var(--theme-primary-text)",
+          marginLeft: 4,
+        }}
+        {...props}
+      />
+    </>
   );
 };
