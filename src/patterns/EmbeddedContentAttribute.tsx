@@ -13,6 +13,7 @@ export interface EmbeddedContentAttributeProps {
   onLinkUpdated?: LinkUpdatedCallback;
   aspectRatio?: number;
   fieldName?: string;
+  transformValue: (value: string) => string;
 }
 
 /**
@@ -21,7 +22,9 @@ export interface EmbeddedContentAttributeProps {
  * record, and displays the URL at a fixed aspect ratio when set.
  *
  */
-export const EmbeddedContentAttribute = ({
+export const EmbeddedContentAttribute: React.FC<
+  EmbeddedContentAttributeProps
+> = ({
   identifier,
   record,
   fields,
@@ -30,8 +33,9 @@ export const EmbeddedContentAttribute = ({
   onLinkUpdated = (v) => v,
   aspectRatio = 4 / 3,
   fieldName = `${product.replace(/\s+/g, "")}:link`,
-}: EmbeddedContentAttributeProps) => {
-  const src = fields[fieldName] as string;
+  transformValue = (v) => v,
+}) => {
+  let src = fields[fieldName] as string;
 
   const openLink = () => {
     const sanitized = aha.sanitizeUrl(src);
@@ -61,6 +65,8 @@ export const EmbeddedContentAttribute = ({
       />
     );
   }
+
+  src = transformValue(src);
 
   return (
     <div
