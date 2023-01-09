@@ -30,8 +30,9 @@ export const EmbeddedContentAttribute = ({
   onLinkUpdated = (v) => v,
   aspectRatio = 4 / 3,
   fieldName = `${product.replace(/\s+/g, "")}:link`,
+  transformValue = (v) => v,
 }: EmbeddedContentAttributeProps) => {
-  const src = fields[fieldName] as string;
+  let src = fields[fieldName] as string;
 
   const openLink = () => {
     const sanitized = aha.sanitizeUrl(src);
@@ -61,6 +62,8 @@ export const EmbeddedContentAttribute = ({
       />
     );
   }
+
+  src = transformValue(src);
 
   return (
     <div
