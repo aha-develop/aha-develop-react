@@ -93,14 +93,14 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 interface AuthProviderProps {
   serviceName: string;
   serviceParameters: unknown;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
-export function AuthProvider({
+const AuthProvider: React.FC<AuthProviderProps> = ({
   serviceName,
   serviceParameters,
   children,
-}: AuthProviderProps) {
+}: AuthProviderProps) => {
   const context = useMemo(
     () => createServiceAuthContext(serviceName),
     [serviceName]
@@ -148,4 +148,6 @@ export function AuthProvider({
   }, [authState, handleReauth]);
 
   return <context.Provider value={authContext}>{children}</context.Provider>;
-}
+};
+
+export { AuthProvider };
