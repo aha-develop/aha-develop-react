@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEvent } from "react";
 
 export interface DrawerInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -27,18 +27,24 @@ export const DrawerInput = ({
       <input
         className="DrawerInput--input"
         aria-label={label}
-        onBlur={(event: React.BlurEvent<HTMLInputElement>) =>
-          onChange(event.target.value)
-        }
-        onKeyDown={(event: React.KeyDownEvent<HTMLInputElement>) => {
+        onBlur={({ target }) => {
+          if (onChange) {
+            onChange({
+              target: { value: target.value },
+            } as React.ChangeEvent<HTMLInputElement>);
+          }
+        }}
+        onKeyDown={(event) => {
           if (event.key === "Enter") {
-            event.target.blur();
+            const target = event.target as HTMLInputElement;
+            target.blur();
           }
         }}
         style={{
           width: "calc(100% - 6px)",
           borderColor: "transparent",
           color: "var(--theme-primary-text)",
+          background: "var(--theme-primary-background)",
           marginLeft: 4,
         }}
         {...props}
