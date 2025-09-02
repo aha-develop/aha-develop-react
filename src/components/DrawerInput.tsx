@@ -1,4 +1,4 @@
-import React, { FocusEvent } from "react";
+import React from "react";
 
 export interface DrawerInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
