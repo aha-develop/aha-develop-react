@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./../index.css";
+
 export interface DrawerInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -16,14 +18,6 @@ export const DrawerInput = ({
 }: DrawerInputProps) => {
   return (
     <>
-      <style>
-        {`
-          .DrawerInput--input::placeholder {
-            color: var(--theme-accent-icon);
-            padding-left: 3px;
-          }
-        `}
-      </style>
       <input
         className="DrawerInput--input"
         aria-label={label}
@@ -39,13 +33,6 @@ export const DrawerInput = ({
             const target = event.target as HTMLInputElement;
             target.blur();
           }
-        }}
-        style={{
-          width: "calc(100% - 6px)",
-          borderColor: "transparent",
-          color: "var(--theme-primary-text)",
-          background: "var(--theme-primary-background)",
-          marginLeft: 4,
         }}
         {...props}
       />

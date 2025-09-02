@@ -20,7 +20,7 @@ export const EmbeddedContent = ({
       <aha-box>
         <p>No URL provided</p>
       </aha-box>
-    )
+    );
   }
 
   return (
@@ -31,13 +31,10 @@ export const EmbeddedContent = ({
         height="100%"
         allowTransparency
         allowFullScreen
-        style={{
-          border: "1px solid var(--theme-primary-border)",
-          clipPath: "inset(1px 1px);",
-        }}
+        className="EmbeddedContent--iframe"
       >
         Unable to load content
       </iframe>
     </AspectRatio>
-  )
-}
+  );
+};
