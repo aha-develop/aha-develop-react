@@ -1,6 +1,8 @@
 import React from "react";
 import { AspectRatio } from "./AspectRatio";
 
+import "./../index.css";
+
 export interface EmbeddedContentProps {
   src: string;
   aspectRatio?: number;

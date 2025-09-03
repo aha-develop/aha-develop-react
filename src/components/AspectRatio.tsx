@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./../index.css";
+
 export interface AspectRatioProps {
   aspectRatio: number;
   children: any;
