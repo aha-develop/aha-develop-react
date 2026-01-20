@@ -175,7 +175,7 @@ aha.on("myServiceAttribute", ({ record, fields }, { identifier }) => {
 
 ## Events
 
-Capture the output of an event callback. This pattern is useful when you need to call third party API endpoints from a server side event and have the result captured.
+Helper functions to aid capturing the output of a registered server event. This pattern is useful when you need to call third party API endpoints from a server side event and have the result captured.
 
 ### registerEventHandler
 
@@ -200,7 +200,7 @@ type DevinSessionData = z.infer<typeof DevinSessionDataSchema>;
 
 registerEventHandler({
   extensionId: EXTENSION_ID,
-  eventName: "createDevinSession",
+  eventName: "createDevinSession", // This should be registered in package.json
   schema: CreateSessionSchema,
   resultSchema: DevinSessionDataSchema,
   handler: async (args, { settings: rawSettings }) => {

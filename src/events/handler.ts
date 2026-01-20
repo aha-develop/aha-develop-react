@@ -56,6 +56,9 @@ type CallServerOptions = {
 const DEFAULT_POLL_INTERVAL = 1000;
 const DEFAULT_TIMEOUT_MS = 60000;
 
+/**
+ * Calls a server-side event handler and captures its return value.
+ */
 export async function callEventHandler<T>({
   extensionId,
   eventName,
@@ -75,9 +78,7 @@ export async function callEventHandler<T>({
   const eventKey = generateEventKey(eventName);
 
   // Clear any previous response with the same key
-  await aha.account.clearExtensionField(extensionId, eventKey).catch(() => {
-    /* no-op */
-  });
+  await aha.account.clearExtensionField(extensionId, eventKey);
 
   // Trigger the server event with args + eventKey
   aha.triggerServer(`${extensionId}.${eventName}`, {
@@ -98,19 +99,13 @@ export async function callEventHandler<T>({
 
     if (stored) {
       // Clean up the stored result
-      await aha.account.clearExtensionField(extensionId, eventKey).catch(() => {
-        /* ignore */
-      });
+      await aha.account.clearExtensionField(extensionId, eventKey);
 
       if (stored.ok) {
         return stored.result;
       }
 
-      console.warn(
-        `Event handler error ${extensionId}.${eventName} ${JSON.stringify(
-          stored,
-        )}`,
-      );
+      console.warn(`Event handler error ${extensionId}.${eventName}`);
 
       const message =
         "message" in stored
@@ -123,6 +118,10 @@ export async function callEventHandler<T>({
   throw new Error(`Timed out waiting for ${eventName} response`);
 }
 
+/**
+ * Registers a server-side event handler with argument and response validation.
+ * Once registered, the handler can be invoked via `callEventHandler`.
+ */
 export function registerEventHandler<
   TSchema extends z.ZodType,
   RSchema extends z.ZodType,
