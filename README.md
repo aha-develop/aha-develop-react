@@ -111,6 +111,7 @@ The event defaults to "mousedown" and can be customised:
 useOutsideAlerter(popupEl, onClose, { event: "mousemove" });
 ```
 
+
 ### useClipboard
 
 This is a simple clipboard helper for React components to copy text to the clipboard and show an indicator for a short time:
@@ -119,15 +120,13 @@ This is a simple clipboard helper for React components to copy text to the clipb
 function CopyableId({ id }) {
   const [onCopy, copied] = useClipboard();
 
-  return (
-    <div>
-      <span>{id}</span>
-      <button onClick={() => onCopy(id)}>
-        <i className="fa-regular fa-copy"></i>
-        {copied ? "Copied" : "Copy"}
-      </button>
-    </div>
-  );
+  return <div>
+    <span>{id}</span>
+    <button onClick={() => onCopy(id)}>
+      <i className="fa-regular fa-copy"></i>
+      {copied ? "Copied" : "Copy"}
+    </button>
+  </div>
 }
 ```
 
@@ -138,7 +137,10 @@ function CopyableId({ id }) {
 Embeds content via an iframe. Constrains element size based on aspect ratio. Sanitizes user input.
 
 ```js
-<EmbeddedContent src="https://my.site.xzy/design.png" aspectRatio={1.333} />
+<EmbeddedContent
+  src="https://my.site.xzy/design.png"
+  aspectRatio={1.333}
+/>
 ```
 
 ## Patterns
@@ -147,13 +149,14 @@ Embeds content via an iframe. Constrains element size based on aspect ratio. San
 
 Fully-featured component for managing embedded content associated with an Aha! Record. Collects a URL as user input, stores it as extension data on the record, and displays the URL at a fixed aspect ratio when set.
 
+
 ```js
 import React from "react";
 import { EmbeddedContentAttribute } from "@aha-develop/aha-develop-react";
 
 aha.on("myServiceAttribute", ({ record, fields }, { identifier }) => {
   const ensureEmbedFlags = async (url) => {
-    if (url.includes("emb=1")) {
+    if (url.includes('emb=1')) {
       return url;
     } else {
       return `${url}?emb=1&ios=false&frameless=false`;
@@ -171,68 +174,4 @@ aha.on("myServiceAttribute", ({ record, fields }, { identifier }) => {
     />
   );
 });
-```
-
-## Events
-
-Helper functions to aid capturing the output of a registered server event. This pattern is useful when you need to call third party API endpoints from a server side event and have the result captured.
-
-### registerEventHandler
-
-Register a server-side event handler with typed input and output schemas.
-
-```TS
-import * as z from "zod";
-import { callEventHandler, registerEventHandler } from "@aha-develop/aha-develop-react";
-
-const CreateSessionSchema = z.object({
-  title: z.string(),
-  prompt: z.string(),
-});
-type CreateSession = z.infer<typeof CreateSessionSchema>;
-
-const DevinSessionDataSchema = z.object({
-  sessionId: z.string(),
-  sessionUrl: z.string(),
-  assignedAt: z.string(),
-});
-type DevinSessionData = z.infer<typeof DevinSessionDataSchema>;
-
-registerEventHandler({
-  extensionId: EXTENSION_ID,
-  eventName: "createDevinSession", // This should be registered in package.json
-  schema: CreateSessionSchema,
-  resultSchema: DevinSessionDataSchema,
-  handler: async (args, { settings: rawSettings }) => {
-    // args is typed as CreateSession
-
-    // ... access secret settings here
-    // ... call a third party API
-
-    // event handler ensures return type matches resultSchema argument
-    return {
-      sessionId,
-      sessionUrl,
-      assignedAt
-    }
-  }
-})
-```
-
-### callEventHandler
-
-Execute a function defined by **registerEventHandler**. This enables client side code to execute functions on the server and capture their output.
-
-```TS
-// Export a function which calls the session handler
-// This can be called client side
-export async function createDevinSession(
-  args: CreateSession,
-): Promise<DevinSessionData> {
-  return callEventHandler<DevinSessionData>({
-    extensionId: EXTENSION_ID,
-    eventName: "createDevinSession",
-    args,
-  });
-}
-```
+ ```
