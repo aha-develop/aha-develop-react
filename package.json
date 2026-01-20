@@ -22,8 +22,5 @@
   },
   "peerDependencies": {
     "react": ">= 16.8.0"
-  },
-  "dependencies": {
-    "zod": "^4.3.5"
   }
 }
