@@ -1,17 +1,20 @@
 import React, { ReactNode } from "react";
 
-export const SendToAI = ({
-  label,
-  button,
-  icon,
-  footer,
-}: {
+export type SendToAIProps = {
   label: string;
   button: ReactNode;
   alert?: ReactNode;
   icon?: ReactNode;
   footer?: ReactNode;
-}) => {
+};
+
+export const SendToAI = ({
+  label,
+  button,
+  alert,
+  icon,
+  footer,
+}: SendToAIProps) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
       {alert}
